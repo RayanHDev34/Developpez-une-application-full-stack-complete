@@ -3,11 +3,10 @@
   width: 100%;
   padding: 2rem;
   display: flex;
-  justify-content: center; /* centre verticalement */
-  align-items: center;     /* centre horizontalement */
+  justify-content: center; 
+  align-items: center;
 }
 
-/* Contenu centré */
 .sign-in-content {
   width: 100%;
   display: flex;
@@ -15,7 +14,6 @@
   align-items: center;
 }
 
-/* Bouton retour */
 .back-btn {
   position: absolute;
   top: 0.5rem;
