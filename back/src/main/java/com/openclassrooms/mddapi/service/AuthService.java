@@ -31,8 +31,6 @@ public class AuthService {
         if (!request.getPassword().equals(user.getPassword())) {
             throw new RuntimeException("Invalid credentials");
         }
-
-
         return userMapper.toDto(user);
     }
 }
