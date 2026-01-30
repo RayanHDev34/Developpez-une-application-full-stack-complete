@@ -1,0 +1,35 @@
+/* Top bar */
+.auth-header {
+  height: 170px;
+  display: flex;
+  align-items: center;
+  padding: 0 1.5rem;
+  border-bottom: 1px solid #e0e0e0;
+}
+
+.logo {
+  height: 150px;
+}
+
+/* Contenu centré */
+.auth-content {
+  min-height: calc(100vh - 170px);
+  display: flex;
+  padding: 1rem;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .auth-header {
+    height: 120px;
+  }
+
+  .logo {
+    height: 90px;
+  }
+
+  .auth-content {
+    min-height: calc(100vh - 120px);
+    padding: 1rem;
+  }
+}
