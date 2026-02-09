@@ -1,0 +1,31 @@
+<app-main-layout>
+  <section class="articles-page">
+
+    <!-- Header -->
+    <div class="articles-header">
+      <button class="create-btn">Créer un article</button>
+      <div class="sort">
+        Trier par ↓
+      </div>
+    </div>
+
+    <!-- Articles list -->
+    <div class="articles-grid">
+      <div
+        class="article-card"
+        *ngFor="let article of mockArticles"
+      >
+        <h3 class="title">{{ article.title }}</h3>
+
+        <div class="meta">
+          <span>{{ article.createdAt }}</span>
+          <span>{{ article.author }}</span>
+        </div>
+
+        <p class="content">
+          {{ article.content }}
+        </p>
+      </div>
+    </div>
+  </section>
+</app-main-layout>

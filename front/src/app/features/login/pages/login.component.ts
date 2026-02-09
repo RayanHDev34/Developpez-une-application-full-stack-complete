@@ -1,14 +1,16 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule, Location } from '@angular/common';
 
-import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
-import { MatFormFieldModule } from '@angular/material/form-field';
+
+import { MatIconModule } from '@angular/material/icon';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
-import { MatIconModule } from '@angular/material/icon';
+import { MatFormFieldModule } from '@angular/material/form-field';
+import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { AuthLayoutComponent } from '../../../layout/auth-layout/auth-layout.component';
 import { AuthService } from '../../login/services/auth.service';
+import { AuthLayoutComponent } from '../../../layout/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-login',
@@ -30,7 +32,8 @@ export class LoginComponent {
   constructor(
     private fb: FormBuilder,
     private location: Location,
-    private authService: AuthService
+    private authService: AuthService,
+    private router: Router
   ) {
     this.form = this.fb.group({
       email: ['', [Validators.required]],
@@ -53,6 +56,7 @@ export class LoginComponent {
   this.authService.login(credentials).subscribe({
     next: (user) => {
       console.log('Utilisateur connecté', user);
+       this.router.navigate(['/articles']);
     },
     error: (err) => {
       if (err.status === 401) {

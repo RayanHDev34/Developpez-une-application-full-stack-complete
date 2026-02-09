@@ -3,6 +3,7 @@ import { RouterModule, Routes } from '@angular/router';
 import { HomeComponent } from './features/home/home.component';
 import { RegisterComponent } from './features/sign-in/pages/register.component';
 import { LoginComponent } from './features/login/pages/login.component';
+import { ArticlesComponent } from './features/articles/pages/articles-page.component';
 
 // consider a guard combined with canLoad / canActivate route option
 // to manage unauthenticated user to access private routes
@@ -10,6 +11,8 @@ const routes: Routes = [
   { path: '', component: HomeComponent },
   {  path: 'register', component: RegisterComponent },
   {  path: 'login', component: LoginComponent },
+  { path:'articles', component: ArticlesComponent}
+
 ];
 
 @NgModule({
