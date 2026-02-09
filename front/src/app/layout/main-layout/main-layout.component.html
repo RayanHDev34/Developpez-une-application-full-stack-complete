@@ -12,16 +12,16 @@
   </nav>
 
   <!-- Burger mobile -->
-  <div class="top-bar__burger">
+  <div class="top-bar__burger" (click)="toggleMobileMenu()">
     ☰
   </div>
 </header>
 
 <!-- Menu mobile -->
-<div class="mobile-menu">
-  <a class="logout">Se déconnecter</a>
-  <a class="active">Articles</a>
-  <a>Thèmes</a>
+<div class="mobile-menu" *ngIf="isMobileMenuOpen">
+  <a class="logout" (click)="closeMobileMenu()">Se déconnecter</a>
+  <a (click)="closeMobileMenu()">Articles</a>
+  <a (click)="closeMobileMenu()">Thèmes</a>
 
   <div class="mobile-menu__avatar">
     <span class="avatar-icon">👤</span>
