@@ -7,8 +7,20 @@
   <!-- Navigation desktop -->
   <nav class="top-bar__nav">
     <a class="logout">Se déconnecter</a>
-    <a class="active">Articles</a>
-    <a>Thèmes</a>
+
+    <a
+      routerLink="/articles"
+      routerLinkActive="active"
+    >
+      Articles
+    </a>
+
+    <a
+      routerLink="/themes"
+      routerLinkActive="active"
+    >
+      Thèmes
+    </a>
   </nav>
 
   <!-- Burger mobile -->
@@ -19,13 +31,31 @@
 
 <!-- Menu mobile -->
 <div class="mobile-menu" *ngIf="isMobileMenuOpen">
-  <a class="logout" (click)="closeMobileMenu()">Se déconnecter</a>
-  <a (click)="closeMobileMenu()">Articles</a>
-  <a (click)="closeMobileMenu()">Thèmes</a>
+
+  <a class="logout" (click)="closeMobileMenu()">
+    Se déconnecter
+  </a>
+
+  <a
+    routerLink="/articles"
+    routerLinkActive="active"
+    (click)="closeMobileMenu()"
+  >
+    Articles
+  </a>
+
+  <a
+    routerLink="/themes"
+    routerLinkActive="active"
+    (click)="closeMobileMenu()"
+  >
+    Thèmes
+  </a>
 
   <div class="mobile-menu__avatar">
     <span class="avatar-icon">👤</span>
   </div>
+
 </div>
 
 <!-- Contenu injecté -->

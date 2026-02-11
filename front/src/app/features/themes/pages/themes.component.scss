@@ -1,0 +1,56 @@
+.themes-page {
+  padding: 24px;
+  max-width: 1100px;
+  margin: 0 auto;
+}
+
+.themes-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.theme-card {
+  background: #f3f3f3;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.theme-title {
+  font-weight: 600;
+  margin-bottom: 8px;
+}
+
+.theme-description {
+  font-size: 14px;
+  color: #555;
+  margin-bottom: 16px;
+}
+
+.subscribe-btn {
+  align-self: center;
+  background: #7b5cff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.subscribed-btn {
+  align-self: center;
+  background: #bdbdbd;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 8px;
+  color: white;
+}
+
+/* 📱 Mobile */
+@media (max-width: 768px) {
+  .themes-grid {
+    grid-template-columns: 1fr;
+  }
+}

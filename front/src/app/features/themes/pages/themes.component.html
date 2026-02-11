@@ -1,0 +1,39 @@
+<app-main-layout>
+
+  <section class="themes-page">
+
+    <div class="themes-grid">
+
+      <div class="theme-card" *ngFor="let theme of themes">
+
+        <h3 class="theme-title">
+          Titre du thème
+        </h3>
+
+        <p class="theme-description">
+          {{ theme.description }}
+        </p>
+
+        <button
+          *ngIf="!theme.subscribed"
+          class="subscribe-btn"
+          (click)="subscribe(theme)"
+        >
+          S’abonner
+        </button>
+
+        <button
+          *ngIf="theme.subscribed"
+          class="subscribed-btn"
+          disabled
+        >
+          Déjà abonné
+        </button>
+
+      </div>
+
+    </div>
+
+  </section>
+
+</app-main-layout>
