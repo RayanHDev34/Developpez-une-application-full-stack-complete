@@ -16,6 +16,8 @@ import { MainLayoutComponent } from '../../../layout/main-layout/main-layout.com
 })
 export class ArticlesComponent {
   constructor(private router: Router) {}
+  sortOrder: 'desc' | 'asc' = 'desc';
+
   readonly mockArticles: Article[] = [
     {
       id: 1,
@@ -77,5 +79,18 @@ export class ArticlesComponent {
   goToCreateArticle(): void {
     console.log('Navigating to create article page');
     this.router.navigate(['/articles/new']);
+  }
+  get sortedArticles(): Article[] {
+    return [...this.mockArticles].sort((a, b) => {
+      const dateA = new Date(a.createdAt).getTime();
+      const dateB = new Date(b.createdAt).getTime();
+
+      return this.sortOrder === 'desc'
+        ? dateB - dateA
+        : dateA - dateB;
+    });
+  }
+  toggleSort(): void {
+    this.sortOrder = this.sortOrder === 'desc' ? 'asc' : 'desc';
   }
 }

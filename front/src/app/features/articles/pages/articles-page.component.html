@@ -4,8 +4,8 @@
     <!-- Header -->
     <div class="articles-header">
       <button class="create-btn" (click)="goToCreateArticle()">Créer un article</button>
-      <div class="sort">
-        Trier par ↓
+      <div class="sort" (click)="toggleSort()">
+        Trier par {{ sortOrder === 'desc' ? '↓' : '↑' }}
       </div>
     </div>
 
@@ -13,7 +13,7 @@
     <div class="articles-grid">
       <div
         class="article-card"
-        *ngFor="let article of mockArticles"
+        *ngFor="let article of sortedArticles"
         (click)="goToArticle(article)"
       >
         <h3 class="title">{{ article.title }}</h3>
