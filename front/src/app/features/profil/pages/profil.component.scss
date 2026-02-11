@@ -1,0 +1,70 @@
+.profile-page {
+  padding: 24px;
+  max-width: 900px;
+  margin: 0 auto;
+}
+
+.page-title {
+  text-align: center;
+  margin-bottom: 24px;
+}
+
+.profile-form {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  max-width: 400px;
+  margin: 0 auto 32px auto;
+}
+
+input {
+  padding: 10px;
+  border-radius: 8px;
+  border: 1px solid #7b5cff;
+  outline: none;
+}
+
+.save-btn {
+  align-self: center;
+  padding: 8px 32px;
+  background: #7b5cff;
+  border: none;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+.section-title {
+  margin-bottom: 16px;
+}
+
+.subscriptions-grid {
+  display: grid;
+  grid-template-columns: repeat(2, 1fr);
+  gap: 20px;
+}
+
+.subscription-card {
+  background: #f3f3f3;
+  padding: 16px;
+  border-radius: 12px;
+  display: flex;
+  flex-direction: column;
+}
+
+.unsubscribe-btn {
+  align-self: center;
+  background: #7b5cff;
+  border: none;
+  padding: 8px 24px;
+  border-radius: 8px;
+  color: white;
+  cursor: pointer;
+}
+
+/* 📱 Responsive */
+@media (max-width: 768px) {
+  .subscriptions-grid {
+    grid-template-columns: 1fr;
+  }
+}

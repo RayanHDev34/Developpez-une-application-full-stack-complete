@@ -1,0 +1,59 @@
+<app-main-layout>
+
+  <section class="profile-page">
+
+    <h1 class="page-title">Profil utilisateur</h1>
+
+    <form [formGroup]="form" (ngSubmit)="save()" class="profile-form">
+
+      <input
+        type="text"
+        formControlName="username"
+        placeholder="Username"
+      />
+
+      <input
+        type="email"
+        formControlName="email"
+        placeholder="email@email.fr"
+      />
+
+      <input
+        type="password"
+        formControlName="password"
+        placeholder="Mot de passe"
+      />
+
+      <button type="submit" class="save-btn">
+        Sauvegarder
+      </button>
+
+    </form>
+
+    <hr />
+
+    <h2 class="section-title">Abonnements</h2>
+
+    <div class="subscriptions-grid">
+
+      <div
+        class="subscription-card"
+        *ngFor="let subscription of subscriptions"
+      >
+        <h3>{{ subscription.title }}</h3>
+
+        <p>{{ subscription.description }}</p>
+
+        <button
+          class="unsubscribe-btn"
+          (click)="unsubscribe(subscription)"
+        >
+          Se désabonner
+        </button>
+      </div>
+
+    </div>
+
+  </section>
+
+</app-main-layout>

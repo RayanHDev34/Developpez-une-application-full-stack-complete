@@ -21,6 +21,14 @@
     >
       Thèmes
     </a>
+    <!-- 🔵 Icône profil -->
+    <a
+      routerLink="/profile"
+      routerLinkActive="active"
+      class="profile-link"
+    >
+      <span class="profile-icon">👤</span>
+    </a>
   </nav>
 
   <!-- Burger mobile -->
@@ -52,9 +60,13 @@
     Thèmes
   </a>
 
-  <div class="mobile-menu__avatar">
-    <span class="avatar-icon">👤</span>
-  </div>
+  <a
+    routerLink="/profile"
+    routerLinkActive="active"
+    (click)="closeMobileMenu()"
+  >
+    Profil
+  </a>
 
 </div>
 
