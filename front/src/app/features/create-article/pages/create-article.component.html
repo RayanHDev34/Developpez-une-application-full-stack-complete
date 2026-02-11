@@ -1,0 +1,43 @@
+<app-main-layout>
+
+  <section class="create-article-page">
+
+    <!-- Bouton retour -->
+    <button class="back-btn" (click)="goBack()">←</button>
+
+    <!-- Titre en dessous -->
+    <h1 class="page-title">Créer un nouvel article</h1>
+
+    <form [formGroup]="form" (ngSubmit)="submit()" class="form">
+
+      <!-- Sélection thème -->
+      <select formControlName="theme">
+        <option value="" disabled selected>Sélectionner un thème</option>
+        <option *ngFor="let theme of themes" [value]="theme">
+          {{ theme }}
+        </option>
+      </select>
+
+      <!-- Titre -->
+      <input
+        type="text"
+        formControlName="title"
+        placeholder="Titre de l’article"
+      />
+
+      <!-- Contenu -->
+      <textarea
+        formControlName="content"
+        placeholder="Contenu de l’article"
+      ></textarea>
+
+      <!-- Bouton créer -->
+      <button type="submit" class="submit-btn">
+        Créer
+      </button>
+
+    </form>
+
+  </section>
+
+</app-main-layout>

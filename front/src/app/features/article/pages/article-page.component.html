@@ -1,0 +1,48 @@
+<app-main-layout>
+
+  <section class="article-page" *ngIf="article as a" >
+
+    <!-- Retour -->
+    <button class="back-btn" (click)="goBack()">←</button>
+
+    <!-- Titre -->
+    <h1 class="title">{{ article.title }}</h1> 
+
+    <!-- Meta -->
+    <div class="meta">
+      <span>Date: {{ article.createdAt }}</span>
+      <span> Autheur: {{ article.author }}</span>
+      <span> Thème: {{ article.author }}</span>
+    </div>
+
+    <!-- Contenu -->
+    <p class="content">{{ article.content }}</p>
+
+    <hr />
+
+    <!-- Commentaires -->
+    <h3 class="comments-title">Commentaires</h3>
+
+    <div class="comments-list">
+      <div class="comment" *ngFor="let comment of comments">
+        <div class="bubble">{{ comment.content }}</div>
+      </div>
+    </div>
+
+    <!-- Envoi commentaire -->
+    <form
+      class="comment-form"
+      [formGroup]="commentForm"
+      (ngSubmit)="submitComment()"
+    >
+      <textarea
+        formControlName="content"
+        placeholder="Écrivez ici votre commentaire"
+      ></textarea>
+
+      <button type="submit" class="send-btn">✈️</button>
+    </form>
+
+  </section>
+
+</app-main-layout>

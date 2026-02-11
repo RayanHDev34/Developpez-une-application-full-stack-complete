@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { Article } from '../interfaces/articles';
+import { Article } from '../../../interfaces/articles.interface';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout.component';
 
 @Component({
@@ -14,7 +15,7 @@ import { MainLayoutComponent } from '../../../layout/main-layout/main-layout.com
   styleUrls: ['./articles-page.component.scss']
 })
 export class ArticlesComponent {
-
+  constructor(private router: Router) {}
   readonly mockArticles: Article[] = [
     {
       id: 1,
@@ -65,5 +66,16 @@ export class ArticlesComponent {
       createdAt: '01/09/2024'
     }
   ];
-
+  goToArticle(article: Article): void {
+  this.router.navigate(
+    ['/articles', article.id],
+    {
+      state: { article }
+    }
+  );
+  }
+  goToCreateArticle(): void {
+    console.log('Navigating to create article page');
+    this.router.navigate(['/articles/new']);
+  }
 }

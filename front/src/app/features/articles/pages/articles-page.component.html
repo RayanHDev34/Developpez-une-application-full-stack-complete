@@ -3,7 +3,7 @@
 
     <!-- Header -->
     <div class="articles-header">
-      <button class="create-btn">Créer un article</button>
+      <button class="create-btn" (click)="goToCreateArticle()">Créer un article</button>
       <div class="sort">
         Trier par ↓
       </div>
@@ -14,6 +14,7 @@
       <div
         class="article-card"
         *ngFor="let article of mockArticles"
+        (click)="goToArticle(article)"
       >
         <h3 class="title">{{ article.title }}</h3>
 
