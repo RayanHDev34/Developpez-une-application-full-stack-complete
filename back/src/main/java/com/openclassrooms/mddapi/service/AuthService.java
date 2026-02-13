@@ -2,6 +2,7 @@ package com.openclassrooms.mddapi.service;
 
 import com.openclassrooms.mddapi.dto.AuthResponseDto;
 import com.openclassrooms.mddapi.dto.LoginRequestDto;
+import com.openclassrooms.mddapi.dto.RegisterRequestDto;
 import com.openclassrooms.mddapi.dto.UserDto;
 import com.openclassrooms.mddapi.mapper.UserMapper;
 import com.openclassrooms.mddapi.model.User;
@@ -45,4 +46,26 @@ public class AuthService {
                 userMapper.toDto(user)
         );
     }
+    public AuthResponseDto register(RegisterRequestDto request) {
+
+        if (userRepository.findByEmail(request.getEmail()).isPresent()) {
+            throw new RuntimeException("Email already exists");
+        }
+
+        User user = new User();
+        user.setEmail(request.getEmail());
+        user.setUsername(request.getUsername());
+        user.setPassword(passwordEncoder.encode(request.getPassword()));
+
+        userRepository.save(user);
+
+        String token = jwtService.generateToken(user.getId());
+
+        return new AuthResponseDto(
+                token,
+                userMapper.toDto(user)
+        );
+    }
+
+
 }
