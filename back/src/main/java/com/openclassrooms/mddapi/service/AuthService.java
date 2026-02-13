@@ -1,9 +1,8 @@
 package com.openclassrooms.mddapi.service;
 
-import com.openclassrooms.mddapi.dto.AuthResponseDto;
-import com.openclassrooms.mddapi.dto.LoginRequestDto;
-import com.openclassrooms.mddapi.dto.RegisterRequestDto;
-import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.payload.response.AuthResponse;
+import com.openclassrooms.mddapi.payload.request.LoginRequest;
+import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.mapper.UserMapper;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -31,7 +30,7 @@ public class AuthService {
         this.jwtService = jwtService;
     }
 
-    public AuthResponseDto login(LoginRequestDto request) {
+    public AuthResponse login(LoginRequest request) {
 
         User user = userRepository.findByEmail(request.getEmail())
                 .orElseThrow(() -> new RuntimeException("Invalid credentials"));
@@ -41,12 +40,12 @@ public class AuthService {
         }
         String token = jwtService.generateToken(user.getId());
 
-        return new AuthResponseDto(
+        return new AuthResponse(
                 token,
                 userMapper.toDto(user)
         );
     }
-    public AuthResponseDto register(RegisterRequestDto request) {
+    public AuthResponse register(RegisterRequest request) {
 
         if (userRepository.findByEmail(request.getEmail()).isPresent()) {
             throw new RuntimeException("Email already exists");
@@ -61,7 +60,7 @@ public class AuthService {
 
         String token = jwtService.generateToken(user.getId());
 
-        return new AuthResponseDto(
+        return new AuthResponse(
                 token,
                 userMapper.toDto(user)
         );

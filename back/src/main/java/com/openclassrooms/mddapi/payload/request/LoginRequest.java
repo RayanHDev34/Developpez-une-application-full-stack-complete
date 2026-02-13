@@ -1,11 +1,11 @@
-package com.openclassrooms.mddapi.dto;
+package com.openclassrooms.mddapi.payload.request;
 
 import lombok.Getter;
 import lombok.Setter;
 
 @Getter
 @Setter
-public class LoginRequestDto {
+public class LoginRequest {
     private String email;
     private String password;
 }

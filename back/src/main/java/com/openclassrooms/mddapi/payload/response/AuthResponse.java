@@ -1,12 +1,12 @@
-package com.openclassrooms.mddapi.dto;
+package com.openclassrooms.mddapi.payload.response;
 import com.openclassrooms.mddapi.dto.UserDto;
 
-public class AuthResponseDto {
+public class AuthResponse {
 
     private String token;
     private UserDto user;
 
-    public AuthResponseDto(String token, UserDto user) {
+    public AuthResponse(String token, UserDto user) {
         this.token = token;
         this.user = user;
     }

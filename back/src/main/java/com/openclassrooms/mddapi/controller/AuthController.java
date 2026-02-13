@@ -1,9 +1,8 @@
 package com.openclassrooms.mddapi.controller;
 
-import com.openclassrooms.mddapi.dto.AuthResponseDto;
-import com.openclassrooms.mddapi.dto.LoginRequestDto;
-import com.openclassrooms.mddapi.dto.RegisterRequestDto;
-import com.openclassrooms.mddapi.dto.UserDto;
+import com.openclassrooms.mddapi.payload.response.AuthResponse;
+import com.openclassrooms.mddapi.payload.request.LoginRequest;
+import com.openclassrooms.mddapi.payload.request.RegisterRequest;
 import com.openclassrooms.mddapi.service.AuthService;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -19,17 +18,17 @@ public class AuthController {
     }
 
     @PostMapping("/login")
-    public ResponseEntity<AuthResponseDto> login(
-            @RequestBody LoginRequestDto request
+    public ResponseEntity<AuthResponse> login(
+            @RequestBody LoginRequest request
     ) {
-        AuthResponseDto response = authService.login(request);
+        AuthResponse response = authService.login(request);
         return ResponseEntity.ok(response);
     }
     @PostMapping("/register")
-    public ResponseEntity<AuthResponseDto> register(
-            @RequestBody RegisterRequestDto request) {
+    public ResponseEntity<AuthResponse> register(
+            @RequestBody RegisterRequest request) {
 
-        AuthResponseDto response = authService.register(request);
+        AuthResponse response = authService.register(request);
 
         return ResponseEntity.ok(response);
     }
