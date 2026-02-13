@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
-import { RouterModule } from '@angular/router';
+import { Router, RouterModule } from '@angular/router';
 import { CommonModule } from '@angular/common';
+import { AuthService } from 'src/app/features/login/services/auth.service';
 
 @Component({
   selector: 'app-main-layout',
@@ -13,6 +14,10 @@ import { CommonModule } from '@angular/common';
   styleUrls: ['./main-layout.component.scss']
 })
 export class MainLayoutComponent {
+  constructor(
+      private router: Router,
+      private authService: AuthService
+    ) {}
    isMobileMenuOpen = false;
 
   toggleMobileMenu(): void {
@@ -22,4 +27,9 @@ export class MainLayoutComponent {
   closeMobileMenu(): void {
     this.isMobileMenuOpen = false;
   }
+  logout(): void {
+  this.authService.logout();
+  this.closeMobileMenu();
+  this.router.navigate(['/']);
+}
 }

@@ -23,7 +23,13 @@ export class AuthService {
         catchError(this.handleError)
       );
   }
+  logout(): void {
+    localStorage.removeItem('token');
+  }
 
+  isAuthenticated(): boolean {
+    return !!localStorage.getItem('token');
+  }
   private handleError(error: any) {
     return throwError(() => error);
   }

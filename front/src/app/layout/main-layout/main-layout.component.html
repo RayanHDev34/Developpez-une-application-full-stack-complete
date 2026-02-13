@@ -6,7 +6,7 @@
 
   <!-- Navigation desktop -->
   <nav class="top-bar__nav">
-    <a class="logout">Se déconnecter</a>
+    <a class="logout" (click)="logout()">Se déconnecter</a>
 
     <a
       routerLink="/articles"
@@ -40,7 +40,7 @@
 <!-- Menu mobile -->
 <div class="mobile-menu" *ngIf="isMobileMenuOpen">
 
-  <a class="logout" (click)="closeMobileMenu()">
+  <a class="logout" (click)="logout()">
     Se déconnecter
   </a>
 
