@@ -9,8 +9,8 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatFormFieldModule } from '@angular/material/form-field';
 import { FormBuilder, FormGroup, Validators, ReactiveFormsModule } from '@angular/forms';
 
-import { AuthService } from '../../login/services/auth.service';
-import { AuthLayoutComponent } from '../../../layout/auth-layout/auth-layout.component';
+import { AuthService } from '../../services/auth.service';
+import { AuthLayoutComponent } from '../../layout/auth-layout/auth-layout.component';
 
 @Component({
   selector: 'app-login',

@@ -3,10 +3,8 @@ import { catchError } from 'rxjs/operators';
 import { Observable, throwError } from 'rxjs';
 import { HttpClient } from '@angular/common/http';
 
-import { User } from 'src/app/interfaces/user.interface';
 import { environment } from 'src/environments/environment';
-import { LoginRequest } from '../interfaces/loginRequest.interface';
-import { AuthResponse } from '../interfaces/AuthResponse.interface';
+import { AuthResponse,RegisterRequest , LoginRequest } from '../interfaces/auth.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -26,11 +24,21 @@ export class AuthService {
   }
   logout(): void {
     localStorage.removeItem('token');
+    localStorage.removeItem('user');
   }
 
   isAuthenticated(): boolean {
     return !!localStorage.getItem('token');
   }
+  
+  register(payload: RegisterRequest): Observable<AuthResponse> {
+    return this.http
+      .post<AuthResponse>(`${this.apiUrl}/register`, payload)
+      .pipe(
+        catchError(this.handleError)
+      );
+  }
+
   private handleError(error: any) {
     return throwError(() => error);
   }

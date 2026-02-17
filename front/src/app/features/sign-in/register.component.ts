@@ -7,7 +7,8 @@ import { MatFormFieldModule } from '@angular/material/form-field';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
-import { AuthLayoutComponent } from '../../../layout/auth-layout/auth-layout.component';
+import { AuthLayoutComponent } from '../../layout/auth-layout/auth-layout.component';
+import { AuthService } from 'src/app/services/auth.service';
 
 @Component({
   selector: 'app-register',
@@ -32,6 +33,7 @@ export class RegisterComponent implements OnInit {
   constructor(
     private fb: FormBuilder,
     private router: Router,
+    private authService: AuthService,
     private location: Location
   ) {}
 
@@ -44,26 +46,33 @@ export class RegisterComponent implements OnInit {
   }
 
   submit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
-
-    this.loading = true;
-    this.error = undefined;
-
-    const payload = this.form.value;
-    console.log('SIGN IN PAYLOAD', payload);
-
-    // 🔜 appel API ici
-    // this.RegisterApi.register(payload).subscribe({...});
-
-    // simulation succès
-    setTimeout(() => {
-      this.loading = false;
-      this.router.navigate(['/login']);
-    }, 1000);
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
   }
+
+  this.loading = true;
+  this.error = undefined;
+
+  const payload = this.form.value;
+
+  this.authService.register(payload).subscribe({
+    next: (response) => {
+      this.loading = false;
+
+      if (response?.token) {
+        localStorage.setItem('token', response.token);
+        localStorage.setItem('user', JSON.stringify(response.user));
+      }
+
+      this.router.navigate(['/login']);
+    },
+    error: (err) => {
+      this.loading = false;
+      this.error = err.error?.message || 'Erreur lors de l’inscription';
+    }
+  });
+}
   goBack(): void {
     this.location.back();
   }
