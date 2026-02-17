@@ -6,6 +6,7 @@ import { HttpClient } from '@angular/common/http';
 import { User } from 'src/app/interfaces/user.interface';
 import { environment } from 'src/environments/environment';
 import { LoginRequest } from '../interfaces/loginRequest.interface';
+import { AuthResponse } from '../interfaces/AuthResponse.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -16,9 +17,9 @@ export class AuthService {
 
   constructor(private http: HttpClient) {}
 
-  login(payload: LoginRequest): Observable<User> {
+  login(payload: LoginRequest): Observable<AuthResponse> {
     return this.http
-      .post<User>(`${this.apiUrl}/login`, payload)
+      .post<AuthResponse>(`${this.apiUrl}/login`, payload)
       .pipe(
         catchError(this.handleError)
       );

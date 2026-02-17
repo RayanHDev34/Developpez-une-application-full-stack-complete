@@ -54,17 +54,20 @@ export class LoginComponent {
   const credentials = this.form.value;
 
   this.authService.login(credentials).subscribe({
-    next: (user) => {
-      console.log('Utilisateur connecté', user);
-       this.router.navigate(['/articles']);
-    },
-    error: (err) => {
-      if (err.status === 401) {
-        console.error('Identifiants invalides');
-      } else {
-        console.error('Erreur serveur');
-      }
+  next: (response) => {
+
+    localStorage.setItem('token', response.token);
+    localStorage.setItem('user', JSON.stringify(response.user));
+    this.router.navigate(['/articles']);
+  },
+
+  error: (err) => {
+    if (err.status === 401) {
+      console.error('Identifiants invalides');
+    } else {
+      console.error('Erreur serveur');
     }
-  });
+  }
+});
 }
 }
