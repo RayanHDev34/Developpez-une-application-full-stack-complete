@@ -2,28 +2,31 @@
 
   <section class="themes-page">
 
-    <div class="themes-grid">
+    <div *ngIf="loading">Chargement...</div>
+    <div *ngIf="error">{{ error }}</div>
 
-      <div class="theme-card" *ngFor="let theme of themes">
+    <div class="themes-grid" *ngIf="!loading && !error">
+
+      <div class="theme-card" *ngFor="let topic of topics">
 
         <h3 class="theme-title">
-          Titre du thème
+          {{ topic.name }}
         </h3>
 
         <p class="theme-description">
-          {{ theme.description }}
+          {{ topic.description }}
         </p>
 
         <button
-          *ngIf="!theme.subscribed"
+          *ngIf="!topic.subscribed"
           class="subscribe-btn"
-          (click)="subscribe(theme)"
+          (click)="subscribe(topic)"
         >
           S’abonner
         </button>
 
         <button
-          *ngIf="theme.subscribed"
+          *ngIf="topic.subscribed"
           class="subscribed-btn"
           disabled
         >

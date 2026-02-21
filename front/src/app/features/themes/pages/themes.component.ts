@@ -1,7 +1,8 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout.component';
-import { Theme } from '../interfaces/theme.interface';
+import { Topic } from '../interfaces/topic.interface';
+import { TopicService } from '../services/topic.service';
 
 @Component({
   selector: 'app-themes-page',
@@ -13,36 +14,40 @@ import { Theme } from '../interfaces/theme.interface';
   templateUrl: './themes.component.html',
   styleUrls: ['./themes.component.scss']
 })
-export class ThemesComponent {
+export class ThemesComponent implements OnInit {
 
-  themes: Theme[] = [
-    {
-      id: 1,
-      title: 'Angular',
-      description: 'Description: lorem ipsum is simply dummy text of the printing and typesetting industry.',
-      subscribed: false
-    },
-    {
-      id: 2,
-      title: 'React',
-      description: 'Description: lorem ipsum is simply dummy text of the printing and typesetting industry.',
-      subscribed: false
-    },
-    {
-      id: 3,
-      title: 'Vue',
-      description: 'Description: lorem ipsum is simply dummy text of the printing and typesetting industry.',
-      subscribed: true
-    },
-    {
-      id: 4,
-      title: 'Node.js',
-      description: 'Description: lorem ipsum is simply dummy text of the printing and typesetting industry.',
-      subscribed: true
-    }
-  ];
+  topics: Topic[] = [];
+  loading = false;
+  error?: string;
 
-  subscribe(theme: Theme): void {
-    theme.subscribed = true;
+  constructor(private topicService: TopicService) {}
+
+  ngOnInit(): void {
+    this.loadTopics();
+  }
+
+  loadTopics(): void {
+    this.loading = true;
+
+    this.topicService.getAll().subscribe({
+      next: (data) => {
+        this.topics = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Erreur lors du chargement';
+        this.loading = false;
+      }
+    });
+  }
+  subscribe(topic: Topic): void {
+    this.topicService.subscribe(topic.id).subscribe({
+      next: () => {
+        topic.subscribed = true;
+      },
+      error: () => {
+        this.error = 'Erreur lors de l’abonnement';
+      }
+    });
   }
 }

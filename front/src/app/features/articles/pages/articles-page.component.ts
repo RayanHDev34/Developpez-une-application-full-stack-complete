@@ -55,7 +55,6 @@ export class ArticlesComponent {
   );
   }
   goToCreateArticle(): void {
-    console.log('Navigating to create article page');
     this.router.navigate(['/articles/new']);
   }
   get sortedArticles(): Article[] {
