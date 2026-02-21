@@ -16,6 +16,4 @@ public class TopicDto {
         this.name = name;
         this.description = description;
     }
-
-    // getters
 }
