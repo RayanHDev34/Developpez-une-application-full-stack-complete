@@ -1,7 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { CommonModule } from '@angular/common';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout.component';
-import { Topic } from '../interfaces/topic.interface';
+import { Topic } from '../../../interfaces/topic.interface';
 import { TopicService } from '../services/topic.service';
 
 @Component({

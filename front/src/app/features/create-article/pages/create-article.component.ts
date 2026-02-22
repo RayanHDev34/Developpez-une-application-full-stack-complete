@@ -73,7 +73,6 @@ export class CreateArticleComponent implements OnInit {
   this.articleService.createArticle(payload)
     .subscribe({
       next: () => {
-        // Retour à la page précédente
         this.location.back();
       },
       error: () => {

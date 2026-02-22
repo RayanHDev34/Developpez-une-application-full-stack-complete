@@ -1,7 +1,8 @@
+import { Observable } from 'rxjs';
 import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
-import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
+
 import { Topic } from '../interfaces/topic.interface';
 
 @Injectable({
@@ -9,18 +10,28 @@ import { Topic } from '../interfaces/topic.interface';
 })
 export class TopicService {
 
-  private readonly apiUrl = `${environment.apiUrl}/topics`;
+  private readonly apiTopicsUrl = `${environment.apiUrl}/topics`;
+  private readonly apiSubscriptionsUrl = `${environment.apiUrl}/subscriptions`;
 
   constructor(private http: HttpClient) {}
 
-  getAll(): Observable<Topic[]> {
-
+  private getAuthHeaders(): HttpHeaders {
     const token = localStorage.getItem('token');
-
-    const headers = new HttpHeaders({
+    return new HttpHeaders({
       Authorization: `Bearer ${token}`
     });
-
-    return this.http.get<Topic[]>(this.apiUrl, { headers });
   }
+
+  getAll(): Observable<Topic[]> {
+    return this.http.get<Topic[]>(this.apiTopicsUrl, {
+      headers: this.getAuthHeaders()
+    });
+  }
+
+  unsubscribe(topicId: number): Observable<void> {
+  return this.http.delete<void>(
+    `${this.apiSubscriptionsUrl}/${topicId}`,
+    { headers: this.getAuthHeaders() }
+  );
+}
 }
