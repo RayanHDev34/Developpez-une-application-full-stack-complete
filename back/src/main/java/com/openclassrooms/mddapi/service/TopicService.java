@@ -50,6 +50,7 @@ public class TopicService {
         topicRepository.save(topic);
         return topicMapper.toDto(topic);
     }
+
     public List<TopicResponse> getAllTopicsWithSubscription(Long userID) {
 
         List<UserTopic> userTopics = userTopicRepository.findByUserId(userID);
