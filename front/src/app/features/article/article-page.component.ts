@@ -1,13 +1,13 @@
+import { ActivatedRoute } from '@angular/router';
 import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
-import { ActivatedRoute, Router } from '@angular/router';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
-import { Comment } from '../interfaces/comment.interface';
-import { Article } from '../../../interfaces/articles.interface';
+import { Article } from '../../interfaces/articles.interface';
+import { Comment } from '../articles/interfaces/article-detail.interface';
 import { MainLayoutComponent } from 'src/app/layout/main-layout/main-layout.component';
-import { ArticleDetailResponse } from '../../articles/interfaces/article-detail.interface';
-import { ArticleService } from '../../articles/services/article.service';
+import { ArticleDetailResponse } from '../articles/interfaces/article-detail.interface';
+import { ArticleService } from '../articles/services/article.service';
 
 @Component({
   selector: 'app-article-page',
@@ -52,7 +52,6 @@ export class ArticleComponent implements OnInit {
 
     this.articleService.getById(this.articleId).subscribe({
       next: (data: ArticleDetailResponse) => {
-        console.log('Article detail data:', data);
         this.article = data.article;
         this.comments = data.comments;
         this.loading = false;
@@ -69,9 +68,28 @@ export class ArticleComponent implements OnInit {
   }
 
   submitComment(): void {
-    if (this.commentForm.invalid) {
-      this.commentForm.markAllAsTouched();
-      return;
-    }
+  if (this.commentForm.invalid) {
+    this.commentForm.markAllAsTouched();
+    return;
+  }
+
+  const content = this.commentForm.value.content;
+
+  this.articleService.addComment(this.articleId, content)
+    .subscribe({
+      next: () => {
+        this.comments.unshift({
+          id: Date.now(),
+          content: content,
+          authorName: 'Moi', 
+          createdAt: new Date().toISOString()
+        });
+
+        this.commentForm.reset();
+      },
+      error: () => {
+        this.error = 'Erreur lors de l’envoi du commentaire';
+      }
+    });
   }
 }

@@ -4,7 +4,7 @@ import { HomeComponent } from './features/home/home.component';
 import { RegisterComponent } from './features/sign-in/register.component';
 import { LoginComponent } from './features/login/login.component';
 import { ArticlesComponent } from './features/articles/pages/articles-page.component';
-import { ArticleComponent } from './features/article/pages/article-page.component';
+import { ArticleComponent } from './features/article/article-page.component';
 import { CreateArticleComponent } from './features/create-article/pages/create-article.component';
 import { ThemesComponent } from './features/themes/pages/themes.component';
 import { ProfilComponent } from './features/profil/pages/profil.component';
