@@ -7,6 +7,8 @@ import com.openclassrooms.mddapi.model.Topic;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.model.UserTopic;
 import com.openclassrooms.mddapi.payload.request.ArticleRequest;
+import com.openclassrooms.mddapi.payload.response.ArticleDetailResponse;
+import com.openclassrooms.mddapi.payload.response.CommentResponse;
 import com.openclassrooms.mddapi.repository.ArticleRepository;
 import com.openclassrooms.mddapi.repository.TopicRepository;
 import com.openclassrooms.mddapi.repository.UserRepository;
@@ -22,6 +24,7 @@ public class ArticleService {
 
     private final ArticleRepository articleRepository;
     private final TopicRepository topicRepository;
+    private final CommentService commentService;
     private final UserRepository userRepository;
     private final UserTopicRepository userTopicRepository;
 
@@ -29,10 +32,12 @@ public class ArticleService {
             ArticleRepository articleRepository,
             TopicRepository topicRepository,
             UserRepository userRepository,
+            CommentService commentService,
             UserTopicRepository userTopicRepository
     ) {
         this.articleRepository = articleRepository;
         this.topicRepository = topicRepository;
+        this.commentService = commentService;
         this.userRepository = userRepository;
         this.userTopicRepository = userTopicRepository;
     }
@@ -52,12 +57,15 @@ public class ArticleService {
 
         return ArticleMapper.toDto(article);
     }
-    public ArticleDto getArticleById(Long id) {
+    public ArticleDetailResponse getArticleById(Long id) {
 
         Article article = articleRepository.findById(id)
                 .orElseThrow(() -> new RuntimeException("Article not found"));
+        ArticleDto articleDto = ArticleMapper.toDto(article);
+        List<CommentResponse> comments =
+                commentService.getCommentsByArticle(id);
 
-        return ArticleMapper.toDto(article);
+        return new ArticleDetailResponse(articleDto, comments);
     }
     public List<ArticleDto> getFeed(Long userId) {
 

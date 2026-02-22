@@ -3,6 +3,7 @@ package com.openclassrooms.mddapi.controller;
 import com.openclassrooms.mddapi.dto.ArticleDto;
 import com.openclassrooms.mddapi.model.User;
 import com.openclassrooms.mddapi.payload.request.ArticleRequest;
+import com.openclassrooms.mddapi.payload.response.ArticleDetailResponse;
 import com.openclassrooms.mddapi.service.ArticleService;
 
 import org.springframework.http.ResponseEntity;
@@ -35,11 +36,10 @@ public class ArticleController {
     }
 
     @GetMapping("/{id}")
-    public ResponseEntity<ArticleDto> getArticle(@PathVariable Long id) {
+    public ResponseEntity<ArticleDetailResponse> getArticle(@PathVariable Long id) {
 
-        ArticleDto article = articleService.getArticleById(id);
-
-        return ResponseEntity.ok(article);
+        ArticleDetailResponse articleDetailResponse = articleService.getArticleById(id);
+        return ResponseEntity.ok(articleDetailResponse);
     }
 
     @GetMapping
