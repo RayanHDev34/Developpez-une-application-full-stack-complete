@@ -23,6 +23,20 @@
           <input matInput type="password" formControlName="password" />
         </mat-form-field>
 
+        <div
+          class="password-rules"
+          *ngIf="form.get('password')?.hasError('strongPassword') 
+                && form.get('password')?.touched"
+        >
+          <ul>
+            <li>Au moins 8 caractères</li>
+            <li>Une lettre majuscule</li>
+            <li>Une lettre minuscule</li>
+            <li>Un chiffre</li>
+            <li>Un caractère spécial</li>
+          </ul>
+        </div>
+
         <button mat-raised-button color="primary" class="full-width">
           S'inscrire
         </button>

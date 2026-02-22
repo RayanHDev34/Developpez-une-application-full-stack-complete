@@ -9,6 +9,7 @@ import { MatButtonModule } from '@angular/material/button';
 import { MatIconModule } from '@angular/material/icon';
 import { AuthLayoutComponent } from '../../layout/auth-layout/auth-layout.component';
 import { AuthService } from 'src/app/services/auth.service';
+import { AbstractControl, ValidationErrors, ValidatorFn } from '@angular/forms';
 
 @Component({
   selector: 'app-register',
@@ -36,13 +37,28 @@ export class RegisterComponent implements OnInit {
     private authService: AuthService,
     private location: Location
   ) {}
+  strongPasswordValidator(): ValidatorFn {
+    return (control: AbstractControl): ValidationErrors | null => {
 
+      const value = control.value || '';
+
+      const hasMinLength = value.length >= 8;
+      const hasLowerCase = /[a-z]/.test(value);
+      const hasUpperCase = /[A-Z]/.test(value);
+      const hasNumber = /[0-9]/.test(value);
+      const hasSpecialChar = /[^A-Za-z0-9]/.test(value);
+
+      const valid = hasMinLength && hasLowerCase && hasUpperCase && hasNumber && hasSpecialChar;
+
+      return !valid ? { strongPassword: true } : null;
+    };
+  }
   ngOnInit(): void {
     this.form = this.fb.group({
-      username: ['', Validators.required],
-      email: ['', [Validators.required, Validators.email]],
-      password: ['', Validators.required],
-    });
+    username: ['', Validators.required],
+    email: ['', [Validators.required, Validators.email]],
+    password: ['', [Validators.required, this.strongPasswordValidator()]],
+  });
   }
 
   submit(): void {
