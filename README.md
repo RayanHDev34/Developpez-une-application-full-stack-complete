@@ -34,7 +34,7 @@ Elle permet aux utilisateurs de :
 
 ---
 
-# 🏗 Architecture
+# Architecture
 
 ## Backend
 
