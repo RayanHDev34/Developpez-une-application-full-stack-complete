@@ -1,8 +1,12 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
 import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
-
 import { MainLayoutComponent } from 'src/app/layout/main-layout/main-layout.component';
+
+import { ArticleService } from '../../../services/article.service';
+import { CreateArticleRequest } from '../interfaces/create-article-request.interface';
+import { Topic } from '../../../interfaces/topic.interface';
+import { TopicService } from '../../../services/topic.service';
 
 @Component({
   selector: 'app-create-article',
@@ -15,25 +19,42 @@ import { MainLayoutComponent } from 'src/app/layout/main-layout/main-layout.comp
   templateUrl: './create-article.component.html',
   styleUrls: ['./create-article.component.scss']
 })
-export class CreateArticleComponent {
+export class CreateArticleComponent implements OnInit {
 
   form: FormGroup;
-
-  themes = [
-    'Angular',
-    'React',
-    'Vue',
-    'Node.js'
-  ];
+  topics: Topic[] = [];
+  loading = false;
+  error?: string;
 
   constructor(
     private fb: FormBuilder,
-    private location: Location
+    private location: Location,
+    private topicService: TopicService,
+    private articleService: ArticleService
   ) {
     this.form = this.fb.group({
-      theme: ['', Validators.required],
+      topicId: ['', Validators.required],
       title: ['', Validators.required],
       content: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {
+    this.loadTopics();
+  }
+
+  loadTopics(): void {
+    this.loading = true;
+
+    this.topicService.getAll().subscribe({
+      next: (data) => {
+        this.topics = data;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Erreur lors du chargement des topics';
+        this.loading = false;
+      }
     });
   }
 
@@ -41,12 +62,23 @@ export class CreateArticleComponent {
     this.location.back();
   }
 
-  submit(): void {
-    if (this.form.invalid) {
-      this.form.markAllAsTouched();
-      return;
-    }
+ submit(): void {
+  if (this.form.invalid) {
+    this.form.markAllAsTouched();
+    return;
+  }
 
-    console.log('Article créé :', this.form.value);
+  const payload: CreateArticleRequest = this.form.value;
+
+  this.articleService.createArticle(payload)
+    .subscribe({
+      next: () => {
+        // Retour à la page précédente
+        this.location.back();
+      },
+      error: () => {
+        console.error('Erreur lors de la création');
+      }
+    });
   }
 }

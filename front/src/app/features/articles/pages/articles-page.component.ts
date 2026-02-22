@@ -1,7 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
 import { CommonModule } from '@angular/common';
-import { ArticleService } from '../services/article.service';
+import { ArticleService } from '../../../services/article.service';
 import { Article } from '../../../interfaces/articles.interface';
 import { MainLayoutComponent } from '../../../layout/main-layout/main-layout.component';
 

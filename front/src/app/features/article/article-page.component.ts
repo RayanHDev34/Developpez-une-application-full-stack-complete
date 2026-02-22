@@ -7,7 +7,7 @@ import { Article } from '../../interfaces/articles.interface';
 import { Comment } from '../articles/interfaces/article-detail.interface';
 import { MainLayoutComponent } from 'src/app/layout/main-layout/main-layout.component';
 import { ArticleDetailResponse } from '../articles/interfaces/article-detail.interface';
-import { ArticleService } from '../articles/services/article.service';
+import { ArticleService } from '../../services/article.service';
 
 @Component({
   selector: 'app-article-page',

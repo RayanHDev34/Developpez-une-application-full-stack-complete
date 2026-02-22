@@ -2,8 +2,9 @@ import { Injectable } from '@angular/core';
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Observable } from 'rxjs';
 import { environment } from 'src/environments/environment';
-import { Article } from '../../../interfaces/articles.interface';
-import { ArticleDetailResponse } from '../interfaces/article-detail.interface';
+import { Article } from '../interfaces/articles.interface';
+import { ArticleDetailResponse } from '../features/articles/interfaces/article-detail.interface';
+import { CreateArticleRequest } from '../features/create-article/interfaces/create-article-request.interface';
 
 @Injectable({
   providedIn: 'root'
@@ -43,4 +44,11 @@ export class ArticleService {
       { headers: this.getAuthHeaders() }
     );
   }
+  createArticle(payload: CreateArticleRequest): Observable<Article> {
+  return this.http.post<Article>(
+    this.apiUrl,
+    payload,
+    { headers: this.getAuthHeaders() }
+  );
+}
 }
