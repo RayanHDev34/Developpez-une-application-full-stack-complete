@@ -2,25 +2,20 @@
 
   <section class="article-page" *ngIf="article as a" >
 
-    <!-- Retour -->
     <button class="back-btn" (click)="goBack()">←</button>
 
-    <!-- Titre -->
     <h1 class="title">{{ article.title }}</h1> 
 
-    <!-- Meta -->
     <div class="meta">
-      <span>Date: {{ article.createdAt }}</span>
-      <span> Autheur: {{ article.author }}</span>
-      <span> Thème: {{ article.author }}</span>
+      <span>Date: {{ article.createdAt | date:'dd/MM/yyyy HH:mm' }} </span>
+      <span> Autheur: {{ article.authorName }}</span>
+      <span> Thème: {{ article.topicName }}</span>
     </div>
 
-    <!-- Contenu -->
     <p class="content">{{ article.content }}</p>
 
     <hr />
 
-    <!-- Commentaires -->
     <h3 class="comments-title">Commentaires</h3>
 
     <div class="comments-list">
@@ -29,7 +24,6 @@
       </div>
     </div>
 
-    <!-- Envoi commentaire -->
     <form
       class="comment-form"
       [formGroup]="commentForm"

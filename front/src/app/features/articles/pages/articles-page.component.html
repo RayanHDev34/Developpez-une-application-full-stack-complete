@@ -17,10 +17,10 @@
         (click)="goToArticle(article)"
       >
         <h3 class="title">{{ article.title }}</h3>
-
+      
         <div class="meta">
-          <span>{{ article.createdAt }}</span>
-          <span>{{ article.author }}</span>
+          <span>{{ article.createdAt | date:'dd/MM/yyyy HH:mm' }}</span>
+          <span>{{ article.authorName }}</span>
         </div>
 
         <p class="content">

@@ -1,11 +1,13 @@
-import { Component } from '@angular/core';
+import { Component, OnInit } from '@angular/core';
 import { CommonModule, Location } from '@angular/common';
-import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 import { ActivatedRoute, Router } from '@angular/router';
+import { FormBuilder, FormGroup, ReactiveFormsModule, Validators } from '@angular/forms';
 
 import { Comment } from '../interfaces/comment.interface';
 import { Article } from '../../../interfaces/articles.interface';
 import { MainLayoutComponent } from 'src/app/layout/main-layout/main-layout.component';
+import { ArticleDetailResponse } from '../../articles/interfaces/article-detail.interface';
+import { ArticleService } from '../../articles/services/article.service';
 
 @Component({
   selector: 'app-article-page',
@@ -18,14 +20,14 @@ import { MainLayoutComponent } from 'src/app/layout/main-layout/main-layout.comp
   templateUrl: './article-page.component.html',
   styleUrls: ['./article-page.component.scss']
 })
-export class ArticleComponent {
+export class ArticleComponent implements OnInit {
 
   article?: Article;
   articleId!: number;
 
-  comments: Comment[] = [
-    { id: 1, author: 'username', content: 'contenu du commentaire' }
-  ];
+  comments: Comment[] = [];
+  loading = false;
+  error?: string;
 
   commentForm: FormGroup;
 
@@ -33,25 +35,32 @@ export class ArticleComponent {
     private location: Location,
     private fb: FormBuilder,
     private route: ActivatedRoute,
-    private router: Router
+    private articleService: ArticleService,
   ) {
-
-    // 1️⃣ Récupération de l'ID depuis l'URL
-    this.articleId = Number(this.route.snapshot.paramMap.get('id'));
-
-    // 2️⃣ Tentative de récupération de l'article via state
-    const navigation = this.router.getCurrentNavigation();
-    this.article = navigation?.extras.state?.['article'];
-
-    // 3️⃣ Fallback MVP si refresh / accès direct
-    if (!this.article) {
-      console.warn('Article non trouvé dans le state, fallback MVP');
-      // 👉 MVP : retour à la liste
-      this.router.navigate(['/articles']);
-    }
-
     this.commentForm = this.fb.group({
       content: ['', Validators.required]
+    });
+  }
+
+  ngOnInit(): void {
+    this.articleId = Number(this.route.snapshot.paramMap.get('id'));
+    this.loadArticle();
+  }
+
+  loadArticle(): void {
+    this.loading = true;
+
+    this.articleService.getById(this.articleId).subscribe({
+      next: (data: ArticleDetailResponse) => {
+        console.log('Article detail data:', data);
+        this.article = data.article;
+        this.comments = data.comments;
+        this.loading = false;
+      },
+      error: () => {
+        this.error = 'Erreur lors du chargement';
+        this.loading = false;
+      }
     });
   }
 
@@ -64,13 +73,5 @@ export class ArticleComponent {
       this.commentForm.markAllAsTouched();
       return;
     }
-
-    this.comments.push({
-      id: Date.now(),
-      author: 'username',
-      content: this.commentForm.value.content
-    });
-
-    this.commentForm.reset();
   }
 }
