@@ -14,6 +14,22 @@ import javax.transaction.Transactional;
 import java.util.List;
 import java.util.stream.Collectors;
 
+/**
+ * Service responsible for managing user subscriptions to topics.
+ *
+ * <p>
+ * This service handles:
+ * <ul>
+ *     <li>Subscribing a user to a topic</li>
+ *     <li>Unsubscribing a user from a topic</li>
+ *     <li>Retrieving all topics a user is subscribed to</li>
+ * </ul>
+ * </p>
+ *
+ * <p>
+ * All operations are executed within a transactional context.
+ * </p>
+ */
 @Service
 @Transactional
 public class SubscriptionService {
@@ -23,6 +39,14 @@ public class SubscriptionService {
     private final UserTopicRepository userTopicRepository;
     private final TopicMapper topicMapper;
 
+    /**
+     * Constructs a {@link SubscriptionService} with required dependencies.
+     *
+     * @param userRepository      repository for user persistence
+     * @param topicRepository     repository for topic persistence
+     * @param userTopicRepository repository for managing user-topic relationships
+     * @param topicMapper         mapper used to convert {@link Topic} to {@link TopicDto}
+     */
     public SubscriptionService(
             UserRepository userRepository,
             TopicRepository topicRepository,
@@ -35,6 +59,24 @@ public class SubscriptionService {
         this.topicMapper = topicMapper;
     }
 
+    /**
+     * Subscribes a user to a specific topic.
+     *
+     * <p>
+     * The method:
+     * <ol>
+     *     <li>Checks if the subscription already exists</li>
+     *     <li>Validates the existence of the user</li>
+     *     <li>Validates the existence of the topic</li>
+     *     <li>Creates and persists a {@link UserTopic} association</li>
+     * </ol>
+     * </p>
+     *
+     * @param userId  the identifier of the user
+     * @param topicId the identifier of the topic
+     * @throws RuntimeException if the user or topic does not exist,
+     *                          or if the user is already subscribed
+     */
     public void subscribe(Long userId, Long topicId) {
 
         if (userTopicRepository.existsByUserIdAndTopicId(userId, topicId)) {
@@ -54,11 +96,38 @@ public class SubscriptionService {
         userTopicRepository.save(subscription);
     }
 
+    /**
+     * Unsubscribes a user from a specific topic.
+     *
+     * <p>
+     * This method removes the association between the user and the topic.
+     * If no subscription exists, the operation completes silently.
+     * </p>
+     *
+     * @param userId  the identifier of the user
+     * @param topicId the identifier of the topic
+     */
     public void unsubscribe(Long userId, Long topicId) {
         userTopicRepository.deleteByUserIdAndTopicId(userId, topicId);
     }
 
+    /**
+     * Retrieves all topics subscribed to by a user.
+     *
+     * <p>
+     * The method:
+     * <ol>
+     *     <li>Fetches all {@link UserTopic} associations for the user</li>
+     *     <li>Extracts the related {@link Topic} entities</li>
+     *     <li>Maps them to {@link TopicDto}</li>
+     * </ol>
+     * </p>
+     *
+     * @param userId the identifier of the user
+     * @return a list of {@link TopicDto} representing the user's subscribed topics
+     */
     public List<TopicDto> getUserTopics(Long userId) {
+
         return userTopicRepository.findByUserId(userId)
                 .stream()
                 .map(UserTopic::getTopic)

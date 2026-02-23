@@ -44,7 +44,6 @@ export class ProfilComponent implements OnInit {
     this.loadSubscriptions();
   }
 
-  // 🔹 Charger infos utilisateur
   loadUser(): void {
     this.userService.getCurrentUser().subscribe({
       next: (user: User) => {
